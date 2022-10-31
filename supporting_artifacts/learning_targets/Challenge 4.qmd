@@ -28,7 +28,7 @@ library(lubridate)
 #| warning: false
 # Thank you to the California Association of Realtors:
 # https://www.car.org/marketdata/data/housingdata
-dirtyhousing <- readxl::read_xls(here::here("Labs", "Lab 4", 
+dirtyhousing <- readxl::read_xls(here::here("supporting_artifacts", "artifact_data", 
   "MedianPricesofExistingDetachedHomesHistoricalData.xls"), skip = 7)
 ```
 

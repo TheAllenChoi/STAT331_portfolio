@@ -23,7 +23,7 @@ library(here)
 ```{r}
 #| warning: false
 #| include: false
-hiphop <- read_csv(here::here("Labs", "Lab 3", "hiphop.csv"),
+hiphop <- read_csv(here::here("supporting_artifacts", "artifact_data", "hiphop.csv"),
                    show_col_types = FALSE)
 ```
 
