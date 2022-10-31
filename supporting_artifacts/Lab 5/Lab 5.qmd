@@ -1,0 +1,188 @@
+---
+title: "Lab 5"
+author: "Allen Choi"
+format:
+  html:
+    toc: true
+    code-fold: true
+    number-sections: true
+editor: visual
+theme: cerulean
+execute:
+  error: true
+  echo: true
+---
+
+```{r setup}
+#| warning: false
+#| include: false
+library(tidyverse)
+library(stringr)
+library(here)
+```
+
+# Reading in data
+
+```{r data}
+#| warning: false
+surveys <- read_csv(here::here("supporting_artifacts", "Lab 5", "surveys.csv"), 
+                    show_col_types = FALSE)
+```
+
+## Start
+
+```{r}
+surveys |> 
+  ggplot(
+    mapping = aes(x = weight, y = species)) +
+    geom_jitter(color = "tomato", alpha = 0.1) +
+    geom_boxplot(outlier.alpha = 1) +
+    labs(x = "Weight (g)", y = "Species") +
+    theme(legend.position = "none")
+```
+
+## 1. Reorder boxplots
+
+```{r}
+surveys |> 
+  mutate(species = fct_reorder(species, weight)) |> 
+  ggplot(
+    mapping = aes(x = weight, y = species)) +
+    geom_jitter(color = "tomato", alpha = 0.1) +
+    geom_boxplot(outlier.alpha = 1) +
+    labs(x = "Weight (g)", y = "Species") +
+    theme(legend.position = "none")
+```
+
+## 2. Moving y-axis label
+
+```{r}
+surveys |> 
+  mutate(species = fct_reorder(species, weight)) |> 
+  ggplot(
+    mapping = aes(x = weight, y = species)) +
+    geom_jitter(color = "tomato", alpha = 0.1) +
+    geom_boxplot(outlier.alpha = 1) +
+    theme(axis.title.y = element_blank(),
+          plot.title.position = "plot",
+          legend.position = "none") +
+    labs(title = "Weight of Species",
+         x = "Grams")
+```
+
+# Time Series Plot
+
+## 1. Basic Visualization
+
+```{r}
+surveys |> 
+  ggplot(mapping = aes(x = year, y = weight, color = genus)) +
+    geom_line() +
+    labs(y = "Weight per Year",
+         x = "Year")
+```
+
+## 2. Mean Weights for Each Year
+
+```{r}
+surveys |> 
+  group_by(year, genus) |> 
+  mutate(MeanWeight = mean(weight)) |> 
+  distinct(year, .keep_all = TRUE) |> 
+  select(MeanWeight, year, genus) |> 
+  ggplot(mapping = aes(x = year, y = MeanWeight, color = genus)) +
+    geom_line(size = 1.25) +
+    labs(y = "Average Weight per Year",
+         x = "Year")
+```
+
+## 3. Reordering Lines
+
+```{r}
+surveys |> 
+  group_by(year, genus) |> 
+  mutate(MeanWeight = mean(weight)) |> 
+  distinct(year, .keep_all = TRUE) |> 
+  select(MeanWeight, year, genus) |> 
+  ggplot(mapping = aes(x = year, y = MeanWeight, color = 
+                       fct_reorder(genus, MeanWeight, .desc = TRUE))) +
+    geom_line(size = 1.25) +
+    labs(y = "Average Weight per Year",
+         x = "Year") 
+```
+
+## 4. Making Graph Spicier
+
+```{r}
+surveys |> 
+  group_by(year, genus) |> 
+  mutate(MeanWeight = mean(weight)) |> 
+  distinct(year, .keep_all = TRUE) |> 
+  select(MeanWeight, year, genus) |> 
+  ggplot(mapping = aes(x = year, y = MeanWeight, color = 
+                       fct_reorder(genus, MeanWeight, .desc = TRUE))) +
+    geom_line(size = 1.25) +
+    labs(x = "Year",
+         col = "Genus",
+         title = "Average Weight in Grams") +
+    theme(axis.title.y = element_blank(),
+          plot.title.position = "plot")
+  
+```
+
+# Captures Over the Week
+
+## 1. Visualization of Rodents by Week
+
+```{r}
+surveys |> 
+  group_by(day_of_week) |> 
+  summarize(total = n()) |> 
+  filter(day_of_week != "") |>
+  ggplot(mapping = aes(x = day_of_week, y = total)) +
+    geom_bar(stat = "identity") +  # Thank you https://stackoverflow.com/a/38803743
+    labs(x = "Day",
+         title = "Total Number of Rodents Caught") +
+    theme(axis.title.y = element_blank(),
+          plot.title.position = "plot")
+  
+```
+
+## 2. Changing Order of the Week
+
+```{r}
+surveys |> 
+  group_by(day_of_week) |> 
+  summarize(total = n()) |> 
+  filter(day_of_week != "") |>
+  ggplot(mapping = aes(x = fct_relevel(
+              day_of_week, "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"), 
+              y = total)) +
+    geom_bar(stat = "identity") +  # Thank you https://stackoverflow.com/a/38803743
+    labs(x = "Day",
+         title = "Total Number of Rodents Caught") +
+    theme(axis.title.y = element_blank(),
+          plot.title.position = "plot")
+  
+```
+
+## 3. Collapse Levels
+
+```{r}
+surveys |> 
+  group_by(day_of_week) |> 
+  summarize(total = n()) |> 
+  filter(day_of_week != "") |>
+  ggplot(mapping = 
+           aes(x = fct_collapse(day_of_week,
+                                Weekday = c("Mon", "Tue", "Wed", "Thu", "Fri"),
+                                Weekend = c("Sat", "Sun")),  
+               y = total)) +
+    geom_bar(stat = "identity") +  # Thank you https://stackoverflow.com/a/38803743
+    labs(x = "Type of Day",
+         title = "Total Number of Rodents Caught") +
+    theme(axis.title.y = element_blank(),
+          plot.title.position = "plot") +
+    scale_y_continuous(limits = c(0, 20000))
+  
+```

@@ -5,6 +5,6 @@ format: pdf
 editor: visual
 ---
 
-In this document, you make a data-based argument for the grade you've earned in this course. Your argument should include evidence from the supporting artifacts you've provided.
+I believe that so far I earned a B in this course. In terms of learning targets, I believe that Challenge 4 demonstrated all the learning targets from WD-1 to WD-6.: I imported a csv file, used select to pick the city columns that I wanted, filtered for four specific years that I needed, used filtering joins to select avocados only from four specific cities, and then combined a dataframe containing housing data with another dataframe containing avocado sales data using a mutating join. In terms of reproducibility, all of my assignments including Lab 5, Challenge 3, and Challenge 4 use the here package. I try to make my code as professional as possible by not including the warning message as shown in Lab 5. I am still in the process of achieving R-2 since I don't really document my code, though for R-3 I use column names instead of their positions to make them resistant to input changes. For showcasing the learning targets for data visualization, I believe that Lab 5 is a good example for DVS-1 to DVS-2: I created a visualization for categorical data vs. quantitative data with the time series plot, and used plot modifications to get rid of the y-axis title and moved the title to the left. I showed creativity in my visualizations
 
 ## The output document should be a PDF or a Word Document, as it should be a **maximum** of 2-pages.
