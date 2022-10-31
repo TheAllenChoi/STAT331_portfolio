@@ -70,7 +70,7 @@ For this lab we will use the **`readr`** package (from the `tidyverse`) to read 
 ```{r data}
 #| warning: false
 # Code for question 1! 
-surveys <- read_csv(here::here("Labs", "Lab 2", "surveys.csv"), 
+surveys <- read_csv(here::here("supporting_artifacts", "Lab 2", "surveys.csv"), 
                     show_col_types = FALSE)
 
 ```
