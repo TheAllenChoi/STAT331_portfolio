@@ -14,5 +14,3 @@ In terms of extending thinking, I have done all of the Challenges so far, and I 
 In terms of being a collaborative group member, I have been present for all of the lectures and ask questions for my team members when necessary. I complete all of the preview activities to make sure I don't hold back my team. However, I am either slightly or very late for a large percentage of my labs and challenges which I hope to change in order to raise my grade up to an A.
 
 In terms of peer-code review, I have been slacking off when it comes to reviewing my classmates' code so I hope to change that in the upcoming weeks.
-
-## The output document should be a PDF or a Word Document, as it should be a **maximum** of 2-pages.
