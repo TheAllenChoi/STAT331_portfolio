@@ -1,5 +1,25 @@
 ---
-title: "Lightening Round Essays"
+title: "Lightning Round Essays"
 format: html
 editor: visual
 ---
+
+Finish the sentence with another student's name: "If \[Student\] doesn't earn an A, then nobody should, because..." Explain your choice and your reasoning.
+
+**If Cameron doesn't earn an A, then nobody should because not only is he always present and helpful in class, but he is always prepared to learn new material.**
+
+What was the most difficult part of the class for you? List a general topic, a specific problem, a kind of work we did, etc. and explain why.
+
+**The most difficult part of the class for me was Lab 4 problem #6 since it required so many different functions to come together just right which I still need to revise.**
+
+What was the easiest part of the class for you? Explain why.
+
+**The easiest part of the class for me was Challenge 4 since it allowed me to be creative with what data I used and I got to be creative in how I wanted to express the results.**
+
+What part of the class surprised or interested you the most? Explain why.
+
+**The most surprising aspect of this class was just how many extra packages there were for R since I only had minimal experience with base R up to this point.**
+
+Give one piece of advice to a student just beginning a quarter of STAT 331 that will help them be successful in learning.
+
+**My one key piece of advice would be to not fall behind since it gets exponentially harder to catch up the more you procrastinate.**
