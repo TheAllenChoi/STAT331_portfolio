@@ -1,0 +1,66 @@
+---
+title: "Challenge 3"
+author: "Allen Choi"
+format:
+  html:
+    toc: true
+    code-fold: true
+    number-sections: true
+editor: visual
+theme: cerulean
+execute:
+  error: true
+  echo: true
+---
+
+```{r setup}
+#| warning: false
+#| include: false
+library(tidyverse)
+library(here)
+```
+
+```{r}
+#| warning: false
+#| include: false
+hiphop <- read_csv(here::here("Labs", "Lab 3", "hiphop.csv"),
+                   show_col_types = FALSE)
+```
+
+# New dataset with only desired variables
+
+```{r}
+hiphop <- hiphop |> 
+  mutate(ethnic = if_else(
+    ethnic == "white", "White", "Non-White")) |> 
+  select(subj, sex, ethnic, intl:unclassifiable) |> 
+  distinct(subj, .keep_all = TRUE)
+```
+
+# Male vs. Female
+
+```{r}
+hiphop |> 
+  group_by(sex) |> 
+  summarize(across(intl:unclassifiable, mean)) |> 
+  summarize(across(intl:unclassifiable, diff))
+```
+
+Males were more familiar with artists in the vocal, classical, and rock genre, while females were more familiar with artists in the intl, folk, country, pop, alternative, hiphop, and unclassifiable genres.
+
+# White vs. Non-White
+
+```{r}
+hiphop |> 
+  group_by(ethnic) |> 
+  summarize(across(intl:unclassifiable, mean)) |> 
+  summarize(across(intl:unclassifiable, diff))
+```
+
+Those who were white were more familiar with vocal, folk, rock, country, and alternative artists, while those who were non-white were more familiar with intl, classical, pop, hiphop, and unclassifiable.
+
+# Study Design Critique
+
+1.  How is the study supposed to conclude if musical tastes can "predict AAE vocabulary knowledge above and beyond ethnicity" when there was only 1 African-American in the study? There were also only 38 Non-White participants in the study.
+2.  All the participants in the study were enrolled in music classes at the University of Minnesota, so the music variables in the study would probably have heavily skewed responses.
+3.  Given how pop-culture knowledge and social network phenomena are generally known by those who are younger, and that the ages of the participants in the study are heavily skewed to the right, the data is probably not representative of those older than a certain age.

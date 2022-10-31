@@ -3,3 +3,5 @@ title: "My Growth as a Data Scientist"
 format: html
 editor: visual
 ---
+
+A key area that I grew in was specifically using dplyr to manipulate even unfamiliar data in order to get the results that I need. To be more specific, I am able to more easily use mutates and pivots in order to get the data in a format that I need to get the statistics that I want. A key example of this is in Challenge 4 where I found a csv file online containing housing data that I wanted. I had to identify which statistics my analysis needed, and had to work backwards from there. dplyr was used to eliminate most of the unnecessary information, renames were used to match variable names across the two datasets, and pivots were used in order to group and find the mean of the data. Finally, by using joins, I was able to combine a dataset that I used in Lab 4 with a cleaned dataset of mean housing prices in California. Compared to the beginning of the quarter, I feel more confident in my ability to read, change, and select the data that I need in order to get the statistics that I want.
