@@ -6,6 +6,7 @@ format:
     toc: true
     code-fold: true
     number-sections: true
+    self-contained: true
 editor: visual
 theme: cerulean
 execute:
@@ -25,7 +26,7 @@ library(here)
 
 ```{r data}
 #| warning: false
-surveys <- read_csv(here::here("supporting_artifacts", "Lab 5", "surveys.csv"), 
+surveys <- read_csv(here::here("supporting_artifacts", "learning_targets", "surveys.csv"), 
                     show_col_types = FALSE)
 ```
 
