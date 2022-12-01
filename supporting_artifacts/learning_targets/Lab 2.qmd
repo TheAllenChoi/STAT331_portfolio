@@ -203,7 +203,7 @@ That should look much better! But there is another problem! You should notice th
 
 Some small changes that make **big** differences to plots. One of these changes are better labels for a plot's axes and legend.
 
-**10. Using the code you created in question 8, modify the x-axis and y-axis labels to describe what is being plotted. Be sure to include any necessary units!**
+**12. Using the code you created in question 8, modify the x-axis and y-axis labels to describe what is being plotted. Be sure to include any necessary units!**
 
 ```{r}
 # Code for question 10! 
@@ -232,7 +232,7 @@ ggplot(data = surveys,
 
 Some people (and journals) prefer for boxplots to be stacked with a specific orientation! Let's practice changing the orientation of our boxplots.
 
-**11. Flip the orientation of your boxplots from question 10. If you created side-by-side boxplots (stacked horizontally), your boxplots should be stacked vertically. If you had vertically stacked boxplots, you should stack your boxplots horizontally!**
+**13. Flip the orientation of your boxplots from question 10. If you created side-by-side boxplots (stacked horizontally), your boxplots should be stacked vertically. If you had vertically stacked boxplots, you should stack your boxplots horizontally!**
 
 ```{r}
 # Code for question 11! 

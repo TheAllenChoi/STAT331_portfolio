@@ -42,7 +42,7 @@ surveys |>
     theme(legend.position = "none")
 ```
 
-## 1. Reorder boxplots
+**1. Reorder boxplots
 
 ```{r}
 surveys |> 
@@ -55,7 +55,7 @@ surveys |>
     theme(legend.position = "none")
 ```
 
-## 2. Moving y-axis label
+**2. Moving y-axis label
 
 ```{r}
 surveys |> 
@@ -73,7 +73,7 @@ surveys |>
 
 # Time Series Plot
 
-## 1. Basic Visualization
+**3. Basic Visualization
 
 ```{r}
 surveys |> 
@@ -83,7 +83,7 @@ surveys |>
          x = "Year")
 ```
 
-## 2. Mean Weights for Each Year
+**4. Mean Weights for Each Year
 
 ```{r}
 surveys |> 
@@ -97,7 +97,7 @@ surveys |>
          x = "Year")
 ```
 
-## 3. Reordering Lines
+**5. Reordering Lines
 
 ```{r}
 surveys |> 
@@ -112,7 +112,7 @@ surveys |>
          x = "Year") 
 ```
 
-## 4. Making Graph Spicier
+**6. Making Graph Spicier
 
 ```{r}
 surveys |> 
@@ -133,7 +133,7 @@ surveys |>
 
 # Captures Over the Week
 
-## 1. Visualization of Rodents by Week
+**7. Visualization of Rodents by Week
 
 ```{r}
 surveys |> 
@@ -149,7 +149,7 @@ surveys |>
   
 ```
 
-## 2. Changing Order of the Week
+**8. Changing Order of the Week
 
 ```{r}
 surveys |> 
@@ -167,7 +167,7 @@ surveys |>
   
 ```
 
-## 3. Collapse Levels
+**9. Collapse Levels
 
 ```{r}
 surveys |> 
