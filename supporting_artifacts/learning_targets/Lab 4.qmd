@@ -1,0 +1,176 @@
+---
+title: "Lab 4"
+author: "Allen Choi"
+format:
+  html:
+    toc: true
+    code-fold: true
+    number-sections: true
+    self-contained: true
+editor: visual
+theme: cerulean
+execute:
+  error: true
+  echo: true
+---
+## Revision
+**This lab was revised before being included in the final portfolio.**
+
+## Setup
+
+```{r setup}
+#| warning: false
+#| include: false
+library(tidyverse)
+library(here)
+```
+
+## Data
+
+```{r data}
+#| warning: false
+#| include: false
+avocados <- read_csv(here::here("supporting_artifacts", "learning_targets", "avocado.csv"), 
+                     show_col_types = FALSE)
+```
+
+**1. Description**
+
+The dataset contains 18249 observations of retailers selling avocados. More specifically, it contains the type of Hass avocado, average price of each avocado sold, what type of Hass avocado it is, and how large the avocado was.
+
+**2. Cleaning data:**
+
+```{r}
+avocados <- avocados |> 
+  rename("Small" = "4046", "Large" = "4225", "ExtraLarge" = "4770") |> 
+  filter(region != "TotalUS")
+```
+
+```{r}
+regionsdata <- tibble(
+  region = c("West", "Southeast", "SouthCentral", "Plains", "Northeast", 
+           "Midsouth", "GreatLakes", "NorthernNewEngland", "WestTexNewMexico"))
+statesdata <- tibble(
+  region = c("California", "NewYork", "SouthCarolina"))
+region_avocado <- avocados |> 
+  semi_join(y = regionsdata, by = "region")
+
+metro_avocado <- avocados |> 
+  anti_join(y = statesdata, by = "region") |> 
+  anti_join(y = regionsdata, by = "region")
+
+```
+
+**3. Most organic small avocados:**
+
+```{r}
+region_avocado |> 
+  filter(type == "organic",
+         year == 2017) |> 
+  group_by(region) |> 
+  mutate(most = max(Small)) |> 
+  distinct(region, most) |> 
+  arrange(desc(most)) |> 
+  ungroup() |> 
+  slice_head()
+```
+
+The Northeast region sold the most organic, small Hass avocados in 2017.
+
+**4. Most avocado sales by month**
+
+```{r}
+avocados |> 
+  separate(col = Date, into = c("Year", "Month", "Day"), sep = "-") |> 
+  select(Month, AveragePrice:type) |> 
+  group_by(Month) |> 
+  mutate(most = max(`Total Volume`)) |> 
+  distinct(Month, .keep_all = TRUE) |> 
+  arrange(desc(most)) |> 
+  ungroup() |> 
+  slice_head()
+  
+```
+
+February is the month with the highest volume of avocado sales.
+
+**5.Top five metro areas for avocado volume**
+
+```{r}
+top_five_metro <- metro_avocado |> 
+  separate(col = Date, into = c("Year", "Month", "Day"), sep = "-") |> 
+  select(region, AveragePrice:type) |> 
+  group_by(region) |> 
+  mutate(most = max(`Total Volume`)) |> 
+  distinct(region, .keep_all = TRUE) |> 
+  arrange(desc(most)) |> 
+  select(region) |> 
+  ungroup() |> 
+  slice_head(n = 5)
+metro_avocado |> 
+  semi_join(top_five_metro, by = "region") |> 
+  ggplot(mapping = aes(x = region, y = `Total Volume`)) +
+  geom_boxplot()
+
+```
+
+**6 Organic vs. Conventional**
+
+```{r}
+cal_region_data <- tibble(
+  region = c("LosAngeles", "SanDiego", "Sacramento", "SanFrancisco"))
+city_compare <- avocados |> 
+  semi_join(cal_region_data) |> 
+  group_by(region, type) |> 
+  mutate(avg_price = mean(AveragePrice),
+         median_price = median(AveragePrice),
+         range_price = IQR(AveragePrice)) |> 
+  distinct(region, .keep_all = TRUE) |> 
+  ungroup() |>
+  group_by(region) |> 
+  mutate(mean = (avg_price[type == "organic"] - 
+                   avg_price[type == "conventional"]),
+         median = (median_price[type == "organic"] - 
+                     median_price[type == "conventional"])) |> 
+  # https://stackoverflow.com/a/62958772
+  distinct(region, mean, median) |> 
+  ungroup()
+
+ggplot(data = city_compare, 
+       mapping = aes(x = region, y = mean)) +
+geom_col()
+
+print(city_compare)
+```
+
+San Francisco has the greatest change in average price between organic and conventional avocados. They have the highest mean average difference at 0.81 and highest median difference at 0.91.
+
+**7. Show the proportion of Hass avocado sales**
+
+```{r}
+avocados |> 
+  semi_join(cal_region_data) |> 
+  select(Date, Small:ExtraLarge, type, region) |>
+  group_by(region, type) |> 
+  mutate(avg_num_s = mean(Small),
+         avg_num_m = mean(Large),
+         avg_num_l = mean(ExtraLarge)) |> 
+  distinct(region, .keep_all = TRUE) |> 
+  ungroup() |> 
+  select(type:avg_num_l) |> 
+  pivot_longer(avg_num_s:avg_num_l,
+               names_to = "Size",
+               values_to = "Averages") |> 
+  ggplot(mapping = aes(x = region, y = Averages, 
+                       fill = factor(Size, levels = 
+                                       c("avg_num_s", "avg_num_m", "avg_num_l")))) +
+  geom_bar(stat='identity', #https://stackoverflow.com/a/59009108
+           position = "fill") +
+  labs(x = "Regions of CA", 
+       y = "Proportion of Mean Avocados Sold", 
+       fill = "Avocado Size",
+       ) +
+  facet_wrap(~ type) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
+
+```

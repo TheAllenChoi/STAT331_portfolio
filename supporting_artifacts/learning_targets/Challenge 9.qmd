@@ -1,0 +1,182 @@
+---
+title: "Challenge 9"
+author: "Allen Choi"
+format:
+  html:
+    toc: true
+    code-fold: true
+    number-sections: true
+    self-contained: true
+editor: visual
+theme: cerulean
+execute:
+  error: true
+  echo: true
+---
+
+```{r setup}
+#| warning: false
+#| include: false
+library(tidyverse)
+library(here)
+library(broom)
+library(DT)
+library(kableExtra)
+```
+
+```{r data}
+#| warning: false
+#| include: false
+a_names <- read_csv(here("supporting_artifacts", "learning_targets", "StateNames_A.csv"), 
+                   show_col_types = FALSE)
+```
+
+# Dataset
+```{r, warning = FALSE}
+datatable(a_names, filter = "top")
+```
+
+# Summarizing and Visualizing
+
+**1. Summary Table**
+
+```{r}
+a_names <- a_names |> 
+  rename(Sex = Gender)
+allison_names <- a_names |> 
+  filter(Name == "Allison") |> 
+  group_by(State, Sex) |> 
+  summarize(Count) |> 
+  group_by(State, Sex) |> 
+  mutate(Total = sum(Count)) |> 
+  distinct(Total, Sex) |> 
+  pivot_wider(names_from = Sex, values_from = Total) |> 
+  replace_na(list(M = 0, `F` = 0)) # https://tidyr.tidyverse.org/reference/replace_na.html
+allison_names |> 
+  kable(
+    col.names = c("State", "Number of Females Named Allison", "Number of Males Named Allison"),
+    caption = "Summarizing Allison Names By State and Sex"
+  ) |> 
+  kable_minimal() |> 
+  kable_styling(bootstrap_options = "striped",
+                position = "left", full_width = F,
+                font_size = 15)
+```
+
+**2. Filtering for only Female**
+
+```{r}
+allison_names |> 
+  select(State, `F`) |> 
+  kable(
+    col.names = c("State", "Number of Females with Allison Names")
+  )
+  # Select was used since there is one state per row
+```
+
+**3. Time Series Plot**
+
+```{r}
+allison_years <- a_names |> 
+  filter(Name == "Allison") |> 
+  group_by(Year) |>
+  mutate(Total = sum(Count)) |> 
+  summarize(Total) |> 
+  distinct(Year, .keep_all = TRUE)
+  
+allison_years |> 
+  ggplot(mapping = aes(x = Year, y = Total)) +
+    geom_line(size = 1.25, color = "Blue") +
+    theme(axis.title.y = element_blank(),
+         plot.title.position = "plot") +
+    labs(title = "Popularity of Allison Names over the Years")
+```
+
+# Modeling the Number of Allisons
+
+**4. Creating a Linear Model**
+
+```{r}
+allison_years |> 
+  lm(Total ~ Year, data = _)
+```
+
+**5. Visualizing Regression Model**
+
+```{r}
+allison_years |> 
+  ggplot(mapping = aes(x = Year, y = Total)) +
+  geom_point() +
+  stat_smooth(method = "lm") +
+  theme(axis.title.y = element_blank(),
+         plot.title.position = "plot") +
+    labs(title = "Popularity of Allison Names over the Years")
+```
+
+**6. Regression Equation**
+
+Predicted Popularity = 209815.1 - 101.6(Year)
+
+**7. Residual Plot**
+
+```{r}
+allison_years |> 
+  lm(Total ~ Year, data = _) |> 
+  broom::augment() |> 
+  ggplot(mapping = aes(y = .resid, x = .fitted)) +
+  geom_point()
+```
+
+In the residual plot I notice two peaks where the popularity of the name "Allison" is more than expected.
+
+**8. Conclusion**
+
+Your name is still cool, but unfortunately it's not as cool as it used to be.
+
+# Spelling by State
+
+**9. Popularity of the Three Names**
+```{r}
+a_names |> 
+  filter(Name %in% c("Allen", "Alan", "Allan"), Sex == "M") |> 
+  group_by(Year, Name) |>
+  mutate(Total = sum(Count)) |> 
+  summarize(Total) |> 
+  distinct(Year, .keep_all = TRUE) |> 
+  ggplot(mapping = aes(x = Year, y = Total, color = Name)) + 
+    geom_line(size = 1.25) +
+    labs(title = "Popularity of Names by Year") +
+    theme(axis.title.y = element_blank(),
+          plot.title.position = "plot")
+```
+
+**10. "Allan" Spelling in Year 2000**
+
+```{r}
+allan_names <- a_names |> 
+  filter(Name %in% c("Allen", "Alan", "Allan"), Sex == "M",
+         Year == 2000, State %in% c("PA", "CA")) |> 
+  group_by(Year, Name) |> 
+  ungroup() |> 
+  select(Name, State, Count) |> 
+  pivot_wider(names_from = Name, values_from = Count)
+allan_names |> 
+  kable(
+    col.names = c("State", "Number of Alan Names", "Number of Allen Names", "Number of Allan Names")
+  )
+```
+
+**11. Converting to Percentages**
+
+```{r}
+allan_names |> 
+  group_by(State) |> 
+  mutate(total = sum(Alan, Allen, Allan),
+         Alan = Alan/total,
+         Allen = Allen/total,
+         Allan = Allan/total) |> 
+  select(State, Alan, Allen, Allan) |> 
+  kable(
+    col.names = c("State", "Percentage of Alan Names", "Percentage of Allen Names", "Percentage of Allan Names" )
+    )
+```

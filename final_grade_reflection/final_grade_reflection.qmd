@@ -5,7 +5,7 @@ format: pdf
 editor: visual
 ---
 
-I believe that so far I earned an A- in this course. WD-1 was demonstrated in Lab 2 #1. WD-2 was demonstrated in
+I believe that so far I earned a B+ in this course. WD-1 was demonstrated in Lab 2 #1. WD-2 was demonstrated in
 
 In terms of learning targets, I believe that Challenge 4 demonstrated all the learning targets from WD-1 to WD-6.: I imported a csv file, used select to pick the city columns that I wanted, filtered for four specific years that I needed, used filtering joins to select avocados only from four specific cities, and then combined a dataframe containing housing data with another dataframe containing avocado sales data using a mutating join.
 
