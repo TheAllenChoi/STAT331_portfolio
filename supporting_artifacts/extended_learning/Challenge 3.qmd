@@ -6,6 +6,7 @@ format:
     toc: true
     code-fold: true
     number-sections: true
+    self-contained: true
 editor: visual
 theme: cerulean
 execute:
@@ -23,7 +24,7 @@ library(here)
 ```{r}
 #| warning: false
 #| include: false
-hiphop <- read_csv(here::here("supporting_artifacts", "Challenge 3", "hiphop.csv"),
+hiphop <- read_csv(here::here("supporting_artifacts", "extended_learning", "hiphop.csv"),
                    show_col_types = FALSE)
 ```
 
