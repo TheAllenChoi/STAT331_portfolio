@@ -1,0 +1,80 @@
+---
+title: "PA 9"
+author: "Allen Choi"
+format:
+  html:
+    toc: true
+    code-fold: true
+    number-sections: true
+    self-contained: true
+editor: visual
+theme: cerulean
+execute:
+  error: true
+  echo: true
+---
+
+```{r setup}
+#| warning: false
+#| include: false
+library(tidyverse)
+library(here)
+library(broom)
+```
+**1.**
+```{r data}
+#| warning: false
+animal <- read_csv(here("supporting_artifacts", "learning_targets", "mystery_animal.csv"), 
+                   show_col_types = FALSE)
+```
+
+**2.**
+```{r}
+animalres <- animal |> 
+  lm(weight_after ~ weight_before, data = _)
+```
+
+**3.**
+```{r}
+animalres |> 
+  broom::augment() |> 
+  ggplot(mapping = aes(y = .resid, x = .fitted)) +
+  geom_point()
+```
+
+**4.**
+```{r}
+qunif(0.95, 1.5, 3.5)
+
+qnorm(0.10, 4.6, 0.8)
+
+pnorm(5, 4.6, 0.8, lower.tail = FALSE)
+
+pchisq(5, 4, lower.tail = FALSE)
+
+tromboneex <- rnorm(100, 4.6, 0.8)
+
+sum(tromboneex < 4)
+```
+**5.**
+```{r}
+music_man <- function(n_tromb, n_cor, n_reed){
+  
+  trombones <- rnorm(n_tromb, 4.6, 0.8)
+  cornets <- runif(n_cor, 1.5, 3.5)
+  reeds <- rchisq(n_reed, 4)
+  total = sum(trombones) + sum(cornets) + sum(reeds)
+  return(total)
+  
+}
+
+set.seed(1957)
+
+my_weights <- rerun(.n = 1000, 
+                    music_man(n_tromb = 76, n_cor = 110, n_reed = 542 + 318 + 175)
+                    ) |> 
+  flatten_dbl()
+
+p = sum(my_weights < 4532) 
+p
+```
