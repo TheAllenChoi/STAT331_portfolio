@@ -26,7 +26,7 @@ library(here)
 
 ```{r data}
 #| warning: false
-surveys <- read_csv(here::here("supporting_artifacts", "learning_targets", "surveys.csv"), 
+surveys <- read_csv(here::here("supporting_artifacts", "learning_targets", "Data" ,"surveys.csv"), 
                     show_col_types = FALSE)
 ```
 

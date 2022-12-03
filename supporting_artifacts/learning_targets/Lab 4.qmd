@@ -30,7 +30,7 @@ library(here)
 ```{r data}
 #| warning: false
 #| include: false
-avocados <- read_csv(here::here("supporting_artifacts", "learning_targets", "avocado.csv"), 
+avocados <- read_csv(here::here("supporting_artifacts", "learning_targets", "Data", "avocado.csv"), 
                      show_col_types = FALSE)
 ```
 

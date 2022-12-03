@@ -24,7 +24,7 @@ library(here)
 ```{r}
 #| warning: false
 #| include: false
-hiphop <- read_csv(here::here("supporting_artifacts", "extended_learning", "hiphop.csv"),
+hiphop <- read_csv(here::here("supporting_artifacts", "extended_learning", "Data", "hiphop.csv"),
                    show_col_types = FALSE)
 ```
 
