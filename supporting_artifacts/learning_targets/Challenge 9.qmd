@@ -27,7 +27,7 @@ library(kableExtra)
 ```{r data}
 #| warning: false
 #| include: false
-a_names <- read_csv(here("supporting_artifacts", "learning_targets", "StateNames_A.csv"), 
+a_names <- read_csv(here("supporting_artifacts", "learning_targets", "Data", "StateNames_A.csv"), 
                    show_col_types = FALSE)
 ```
 

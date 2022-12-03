@@ -24,7 +24,7 @@ library(broom)
 **1.**
 ```{r data}
 #| warning: false
-animal <- read_csv(here("supporting_artifacts", "learning_targets", "mystery_animal.csv"), 
+animal <- read_csv(here("supporting_artifacts", "learning_targets", "Data", "mystery_animal.csv"), 
                    show_col_types = FALSE)
 ```
 
