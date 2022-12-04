@@ -18,7 +18,7 @@ What was the easiest part of the class for you? Explain why.
 
 What part of the class surprised or interested you the most? Explain why.
 
-**The most surprising aspect of this class was just how many extra packages there were for R since I only had minimal experience with base R up to this point.**
+**The most surprising aspect of this class was just how easy R was to use for manipulating data.**
 
 Give one piece of advice to a student just beginning a quarter of STAT 331 that will help them be successful in learning.
 

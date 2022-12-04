@@ -29,7 +29,9 @@ xmas <- read.csv("https://www.dropbox.com/s/e584pryn8evm1gz/xmas.csv?dl=1")
 ```
 
 # Pluralizing Function
+
 **1.**
+
 ```{r pluralize-function}
 # Function that takes a noun and makes it plural
 # Arguments -- gift -- A string or vector of strings
@@ -50,7 +52,9 @@ return(gift)
 ```
 
 # Phrase Function
+
 **2.**
+
 ```{r phrase-function}
 make_phrase <- function(num_word, item, verb, adjective, location) {
   
@@ -84,7 +88,9 @@ make_phrase <- function(num_word, item, verb, adjective, location) {
 ```
 
 # Calling Phrase function
+
 **3.**
+
 ```{r phrase}
 xmas2 <- xmas |> 
   mutate(day.num = as.character(english::english(Day)
@@ -102,7 +108,9 @@ xmas2 <- xmas |>
 ```
 
 # String for one day
+
 **4.**
+
 ```{r}
 # Produces the string for one day of the song.
 # Arguments -- dataset -- A data frame containing information about gifts
@@ -136,7 +144,9 @@ sing_line <- function(dataset, line, phrase_col){
 ```
 
 # Tests
+
 **5.**
+
 ```{r}
 xmas2 |>
 sing_line(line = 2, phrase_col = Full.Phrase)
@@ -147,7 +157,9 @@ map_chr(1:12, ~ sing_line(xmas2, .x, Full.Phrase)) |>
 ```
 
 # Entire Lyrics
+
 **6.**
+
 ```{r}
 xmas2 <- xmas |>
   mutate(
